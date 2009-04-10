@@ -403,6 +403,10 @@ class Interface(object):
         hidemenu_action = gtk.ToggleAction('HideMemubar', 'Hide _Menubar',
         		'Hide Menubar', gtk.STOCK_GOTO_TOP)
         hidemenu_action.connect('activate', self.hide_menu)
+        
+        hidewindow_action = gtk.Action("HideWindow", "Hide _Window",
+        		"Hide Window", gtk.STOCK_NO)
+        hidewindow_action.connect('activate', self.systray_cb)
 
         file_action = gtk.Action('File', '_File', 'File', None)
         edit_action = gtk.Action('Edit', '_Edit', 'Edit', None)
@@ -426,6 +430,7 @@ class Interface(object):
         self.action_group.add_action(about_action)
         self.action_group.add_action_with_accel(shrink_url_action, '<Ctrl>U')
         self.action_group.add_action_with_accel(hidemenu_action, '<Alt>9')
+        self.action_group.add_action_with_accel(hidewindow_action, '<Alt>x')
 
         # definition of the UI
 
@@ -454,6 +459,7 @@ class Interface(object):
             </menu>
             <menu action="View">
               <menuitem action="HideMemubar" />
+              <menuitem action="HideWindow" />
             </menu>
             <menu action="Help">
               <menuitem action="About" />
