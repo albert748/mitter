@@ -486,10 +486,20 @@ class Interface(object):
         text_area.pack_start(self.update_text)
 
         self.update_button = gtk.Button()
-        self.update_button.set_size_request(60,10)
+        self.update_button.set_size_request(45,10)
         self.update_button.connect('clicked', self.update_status)
+        
+        image = gtk.Image()
+        refresh_icon = util.find_image('refresh.png')
+        image.set_from_file(refresh_icon)
+        refresh_button = gtk.Button()
+        refresh_button.add(image)
+        refresh_button.set_size_request(30,10)
+        refresh_button.connect("clicked", self.refresh)
+        
 
         update_box = gtk.HBox(False, 0)
+        update_box.pack_start(refresh_button, False, False, 0)
         update_box.pack_start(text_area, expand=True, fill=True,
                 padding=0)
         update_box.pack_start(self.update_button, expand=False, fill=False,
@@ -777,7 +787,7 @@ class Interface(object):
                         'this from <i>%s</i>:<br/>%s' % (self.unread_tweets,
                                 sender, tweet)
             else:
-                msg = 'One new tweet from <i>%s</i>:<br/>%s' % (sender,
+                msg = '<i>%s</i>:<br/>%s' % (sender,
                         tweet)
 
             if self.systray:
@@ -913,7 +923,7 @@ class Interface(object):
         """Count the number of chars in the edit field and update the
         label that shows the available space."""
 
-        self.update_button.set_label('(%d)' % (140 -
+        self.update_button.set_label('%d' % (140 -
             str_len(self.update_text.get_text())))
 
         return True
