@@ -226,9 +226,22 @@ class Interface(object):
         self.systray = gtk.StatusIcon()
         self.systray.set_from_file(self.app_icon)
         self.systray.connect('activate', self.systray_cb)
+        self.systray.connect('popup-menu', self.systray_popup)
         self.systray.set_tooltip('Mitter: Click to toggle window visibility.')
         self.systray.set_visible(True)
         return
+        
+    def systray_popup(self, status_icon, button, activate_time):
+	  popup_menu = gtk.Menu()
+	  restore_item = gtk.MenuItem("Restore")
+	  restore_item.connect("activate", self.systray_cb)
+	  quit_item = gtk.ImageMenuItem(gtk.STOCK_QUIT)
+	  quit_item.connect("activate", self.quit)
+	  popup_menu.append(restore_item)
+	  popup_menu.append(quit_item)
+	  popup_menu.show_all()
+	  time = gtk.get_current_event_time()
+	  popup_menu.popup(None, None, None, 0, time)
 
     def delete_event_cb(self, widget, event, user_param=None):
         if self.systray:
@@ -409,8 +422,8 @@ class Interface(object):
 
         # definition of the UI
 
-        uimanager = gtk.UIManager()
-        uimanager.insert_action_group(self.action_group, 0)
+        self.uimanager = gtk.UIManager()
+        self.uimanager.insert_action_group(self.action_group, 0)
         ui = '''
         <ui>
           <toolbar name="MainToolbar">
@@ -438,12 +451,12 @@ class Interface(object):
           </menubar>
         </ui>
         '''
-        uimanager.add_ui_from_string(ui)
+        self.uimanager.add_ui_from_string(ui)
 
-        self.window.add_accel_group(uimanager.get_accel_group())
+        self.window.add_accel_group(self.uimanager.get_accel_group())
 
-        self.main_toolbar = uimanager.get_widget('/MainToolbar')
-        self.main_menu = uimanager.get_widget('/MainMenu')
+        self.main_toolbar = self.uimanager.get_widget('/MainToolbar')
+        self.main_menu = self.uimanager.get_widget('/MainMenu')
 
         return
 
