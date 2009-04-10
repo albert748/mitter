@@ -474,23 +474,25 @@ class Interface(object):
         # (we do this 'cause, when someone is using small fonts, the button
         # gets bigger than the entry field and it looks a little bit weird.)
 
-        info_area = gtk.HBox(True, 0)
+        #info_area = gtk.HBox(True, 0)
 
         self.char_count = gtk.Label()
-        info_area.pack_start(gtk.Label('What are you doing?'))
-        info_area.pack_start(self.char_count)
+        #I don't like this
+        #info_area.pack_start(gtk.Label('What are you doing?'))
+        #info_area.pack_start(self.char_count)
 
         text_area = gtk.VBox(True, 0)
-        text_area.pack_start(info_area)
+        #text_area.pack_start(info_area)
         text_area.pack_start(self.update_text)
 
-        update_button = gtk.Button(stock=gtk.STOCK_ADD)
-        update_button.connect('clicked', self.update_status)
+        self.update_button = gtk.Button()
+        self.update_button.set_size_request(60,10)
+        self.update_button.connect('clicked', self.update_status)
 
         update_box = gtk.HBox(False, 0)
         update_box.pack_start(text_area, expand=True, fill=True,
                 padding=0)
-        update_box.pack_start(update_button, expand=False, fill=False,
+        update_box.pack_start(self.update_button, expand=False, fill=False,
                 padding=0)
 
         return update_box
@@ -911,7 +913,7 @@ class Interface(object):
         """Count the number of chars in the edit field and update the
         label that shows the available space."""
 
-        self.char_count.set_text('(%d)' % (140 -
+        self.update_button.set_label('(%d)' % (140 -
             str_len(self.update_text.get_text())))
 
         return True
