@@ -1,0 +1,19 @@
+Metadata-Version: 1.0
+Name: mitter
+Version: 0.4.3
+Summary: Update your Twitter status
+Home-page: http://code.google.com/p/mitter/
+Author: Julio Biason
+Author-email: julio@juliobiason.net
+License: GPL3
+Download-URL: http://mitter.googlecode.com/files/mitter-0.4.3.tar.gz
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Classifier: Environment :: X11 Applications :: GTK
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: License :: OSI Approved :: GNU General Public License (GPL)
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Communications :: Chat

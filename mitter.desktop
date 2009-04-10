@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=0.4
+Encoding=UTF-8
+Name=Mitter
+Comment=A client for twitter.com
+Exec=/usr/bin/mitter
+Icon=mitter
+Type=Application
+Categories=Network

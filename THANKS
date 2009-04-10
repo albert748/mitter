@@ -1,0 +1,14 @@
+Many thanks to:
+
+- Wayne Richardson, who actually reminded that some people use Mitter and 
+  when I break stuff, it stops working for them and for the Ctrl+Enter to
+  send messages.
+- Santiago Gala, for the locale parsing patch.
+- Mike, who posted a comment on my blog with an issue of the TTY interface.
+- Faheem Pervez, for the Maemo deb.
+- Sugree Phatanapherom, for the constant testing in weird situations.
+- Apirak, who came with some interesting interface ideas.
+- Kristian Rietveld, who posted a solution to the auto-word-wrap GtkTreeView
+  (http://lists-archives.org/gtk/06637-tree-view-cell-size-negotiation.html)
+- Wiennat for the retweet patch.
+  

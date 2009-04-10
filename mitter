@@ -1,0 +1,145 @@
+#!/usr/bin/python2.5
+# -*- coding: utf-8 -*-
+
+# Mitter, a Maemo client for Twitter.
+# Copyright (C) 2007, 2008  Julio Biason
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+import time
+import urllib
+import os
+import logging
+
+from optparse import OptionParser
+
+import mitterlib.twitter as twitter
+import mitterlib
+
+log = logging.getLogger('mitter')
+
+
+def main():
+    """Main function."""
+
+    # options from the command line
+
+    parser = OptionParser()
+    parser.add_option('-u', '--user',
+            dest='user',
+            help='Username to login',
+            default='')
+    parser.add_option('-p', '--password',
+            dest='password',
+            help='Login password',
+            default='')
+    parser.add_option('-c', '--config',
+            dest='config_file',
+            help='Configuration file',
+            default='')
+    parser.add_option('-d', '--debug',
+            dest='debug',
+            action='store_true',
+            help='Display debugging information',
+            default=False)
+    # The help for '-i/--interface' will be added by "interface_options"
+    parser.add_option('-i', '--interface',
+            dest='interface',
+            default=None)
+    parser.add_option('-s', '--https',
+            dest='https',
+            action='store_true',
+            help='Use Twitter with HTTPS',
+            default=False)
+
+    # Ask interfaces to add their options in the command line
+
+    from mitterlib import ui
+    ui.interface_options(parser)
+
+    # Command line options
+
+    (options, _) = parser.parse_args()
+
+    # start the logging service
+
+    if options.debug:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.INFO)
+    log = logging.getLogger('mitter')
+
+    # now start the interface
+
+    interface = ui.interface(options.interface)
+
+    if interface is None:
+        log.error('Sorry, no interface could be found for your system')
+        return
+
+    # load the config file, including preferences for that interface
+
+    try:
+        (username, password, https, prefs) = mitterlib.read_config(
+                conf_file=options.config_file, 
+                namespace=interface.namespace)
+    except IOError:
+        # no config file; use clean values
+        username = ''
+        password = ''
+        https = False
+        prefs = {}
+
+    # command line options have higher priority over saved preferences
+
+    if options.user:
+        username = options.user
+
+    if options.password:
+        password = options.password
+
+    if options.https:
+        https = options.https
+
+    # now we use all the other options as a dictionary
+
+    options = options.__dict__  # HACK ALERT! But it works.
+
+    main_keys = ['user', 'password', 'interface', 'debug', 'https']
+
+    #  remove any None options and the options needed only by the starter
+    #  program
+
+    removable_keys = []
+    for key in options:
+        if options[key] is None or key in main_keys:
+            removable_keys.append(key)
+
+    for key in removable_keys:
+        del options[key]
+
+    prefs.update(options)
+
+    # now start the twitter connection
+
+    t = twitter.Twitter(username, password, https, threads=interface.threads)
+    ui = interface.Interface(mitterlib.save_config, username, password, \
+        https, t, prefs)
+
+    # display the interface (the interface should take care of updating
+    # itself)
+    ui()
+
+if __name__ == '__main__':
+    main()
