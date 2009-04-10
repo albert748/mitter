@@ -399,9 +399,14 @@ class Interface(object):
         shrink_url_action.connect('activate', self.shrink_url)
 
         post_action = gtk.Action('Posts', '_Posts', 'Post management', None)
+        
+        hidemenu_action = gtk.ToggleAction('HideMemubar', 'Hide _Menubar',
+        		'Hide Menubar', gtk.STOCK_GOTO_TOP)
+        hidemenu_action.connect('activate', self.hide_menu)
 
         file_action = gtk.Action('File', '_File', 'File', None)
         edit_action = gtk.Action('Edit', '_Edit', 'Edit', None)
+        view_action = gtk.Action('View', '_View', 'View', None)
         help_action = gtk.Action('Help', '_Help', 'Help', None)
 
         # action group (will have all the actions, 'cause we are not actually
@@ -416,9 +421,11 @@ class Interface(object):
         self.action_group.add_action(post_action)
         self.action_group.add_action(file_action)
         self.action_group.add_action(edit_action)
+        self.action_group.add_action(view_action)
         self.action_group.add_action(help_action)
         self.action_group.add_action(about_action)
         self.action_group.add_action_with_accel(shrink_url_action, '<Ctrl>U')
+        self.action_group.add_action_with_accel(hidemenu_action, '<Alt>9')
 
         # definition of the UI
 
@@ -445,6 +452,9 @@ class Interface(object):
               <separator />
               <menuitem action="Settings" />
             </menu>
+            <menu action="View">
+              <menuitem action="HideMemubar" />
+            </menu>
             <menu action="Help">
               <menuitem action="About" />
             </menu>
@@ -459,6 +469,13 @@ class Interface(object):
         self.main_menu = self.uimanager.get_widget('/MainMenu')
 
         return
+
+    def hide_menu(self, widget):
+		  self.main_menu = self.uimanager.get_widget('/MainMenu')
+		  if widget.get_active():
+		      self.main_menu.hide()
+		  else:
+		      self.main_menu.show()
 
     def create_update_box(self):
         """Create the widgets related to the update box"""
