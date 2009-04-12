@@ -1475,6 +1475,8 @@ class Interface(object):
             return
 
         loader = gtk.gdk.PixbufLoader()
+        #must set size before write
+        loader.set_size(48,48)
         loader.write(data)
         loader.close()
 
