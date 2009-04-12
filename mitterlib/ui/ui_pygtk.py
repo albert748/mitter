@@ -365,8 +365,10 @@ class Interface(object):
         self.grid.connect('cursor-changed', self.check_post)
         self.grid.connect('row-activated', self.open_post)
         self.grid.connect('button-press-event', self.click_post)
-        self.grid.connect('popup-menu',
-                lambda view: self.show_post_popup(view, None))
+        
+        #Maybe here is no use
+        #self.grid.connect('popup-menu',
+        #        lambda view: self.show_post_popup(view, None))
 
     def menu_and_toolbar(self):
         """Created the main menu and the toolbar."""
