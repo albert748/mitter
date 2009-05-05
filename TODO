@@ -10,6 +10,10 @@ DONE: Make user's pixbuf same size
 
 May 5
 TODO: freezon problem did not come any more, but X window error 0:0 on my arch
+ERROR: Fatal IO error 0 (Success) on X server :0.0.
+this come out from dbus notification!
+
 TODO: Notify avatar beside comment
 TODO: auto shrinking URL
 TODO: Change gtk.Entry to gtk.Textview
+TODO: scroll back to get more older message

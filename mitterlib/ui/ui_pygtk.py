@@ -816,6 +816,10 @@ class Interface(object):
                     continue
                 else:
                     tweet = self.grid_store.get_value(iter, Columns.MESSAGE)
+                    # Add avatar to notify message
+                    pic = self.grid_store.get_value(iter, Columns.PIC)
+                    self.queue_pic(pic)
+                    avatar = self.user_pics[pic]
                     self.log.debug('notify_broadcast with this tweet: %s' %
                             tweet)
                     break
@@ -832,7 +836,7 @@ class Interface(object):
                 gtk.gdk.threads_enter()
                 screen, rect, orientation = self.systray.get_geometry()
                 gtk.gdk.threads_leave()
-                self.notify_broadcast(msg, rect.x, rect.y)
+                self.notify_broadcast(msg, avatar, rect.x, rect.y)
         return
 
     # settings callbacks
