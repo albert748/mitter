@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-version = '0.4.3'
+version = '0.4.5'
 
 gpl_3 = """
                     GNU GENERAL PUBLIC LICENSE
