@@ -2,9 +2,13 @@ Apr 11
 TODO: Binding mitter to system shortcut to one key call out
 
 Apr 12
-TODO: Mitter always freezon sometimes, Maybe single thread problem
+DONE: Mitter always freezon sometimes, Maybe single thread problem
 
 Apr 13
 TODO: Save user pixbuf to save brandwidth without download every time
 DONE: Make user's pixbuf same size
 
+May 5
+TODO: freezon problem did not come any more, but X window error 0:0 on my arch
+TODO: Notify avatar beside comment
+TODO: auto shrinking URL
