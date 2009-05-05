@@ -834,9 +834,13 @@ class Interface(object):
 
             if self.systray:
                 gtk.gdk.threads_enter()
-                screen, rect, orientation = self.systray.get_geometry()
+                geometry = self.systray.get_geometry()
                 gtk.gdk.threads_leave()
-                self.notify_broadcast(msg, avatar, rect.x, rect.y)
+
+                if geometry:
+                    # there is no geometry on OS X
+                    (screen, rect, orientation) = geometry
+                    self.notify_broadcast(msg, avatar, rect.x, rect.y)
         return
 
     # settings callbacks
@@ -1484,7 +1488,9 @@ class Interface(object):
         loader.write(data)
         loader.close()
 
-        self.user_pics[id] = loader.get_pixbuf()
+        user_pic = loader.get_pixbuf()
+        user_pic  = user_pic.scale_simple(48, 48, gtk.gdk.INTERP_BILINEAR)
+        self.user_pics[id] = user_pic
         self.pic_queue.discard(id)
 
         # finally, request the grid to redraw itself
