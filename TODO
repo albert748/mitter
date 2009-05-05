@@ -12,3 +12,4 @@ May 5
 TODO: freezon problem did not come any more, but X window error 0:0 on my arch
 TODO: Notify avatar beside comment
 TODO: auto shrinking URL
+TODO: Change gtk.Entry to gtk.Textview
