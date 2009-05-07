@@ -352,7 +352,7 @@ class Interface(object):
         self.grid.append_column(self.user_column)
 
         self.message_renderer = gtk.CellRendererText()
-        self.message_renderer.set_property('wrap-mode', gtk.WRAP_WORD)
+        #self.message_renderer.set_property('wrap-mode', gtk.WRAP_WORD)
         self.message_renderer.set_property('wrap-width', 200)
         self.message_renderer.set_property('width', 10)
 
