@@ -38,12 +38,12 @@ class Notify():
         self.notify = None
 
         try:
-            #import dbus
-            #bus = dbus.SessionBus()
-            #proxy = bus.get_object('org.freedesktop.Notifications',
-            #        '/org/freedesktop/Notifications')
-            #self._dbus_notify = dbus.Interface(proxy,
-            #        'org.freedesktop.Notifications')
+            import dbus
+            bus = dbus.SessionBus()
+            proxy = bus.get_object('org.freedesktop.Notifications',
+                    '/org/freedesktop/Notifications')
+            self._dbus_notify = dbus.Interface(proxy,
+                    'org.freedesktop.Notifications')
 
             self.notify = self._notify_galago
             self.log.debug('Using Galago notifications')
@@ -76,12 +76,8 @@ class Notify():
         msg = re.sub(r'&(?!amp;)', r'&amp;', msg)
 
         try:
-            
-            self._mnotify = pynotify.Notification(self.appname, msg)
-            #self._mnotify.show()
-            
-            #self._dbus_notify.Notify(self.appname, 0, '', self.appname, msg,
-            #       [], {'x': x, 'y': y}, 1000*self.timeout)
+            self._dbus_notify.Notify(self.appname, 0, '', self.appname, msg,
+                   [], {'x': x, 'y': y}, 1000*self.timeout)
         except Exception, e:
             self.log.error('error %s' % e)
             self._notify_default(msg, x, y)
